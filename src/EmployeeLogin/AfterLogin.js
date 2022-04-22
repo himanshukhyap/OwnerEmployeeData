@@ -1,66 +1,56 @@
 import React, { useEffect, useState } from 'react'
-import $ from "jquery";
 import AddEmployeeModel from './AddEmployeeModel';
 import EditModel from '../EditModel';
-import  moment from 'moment';
+import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { Allemployeedata, GetOwnerData } from '../Redux/Action';
 
 
 
 function AfterLogin() {
-  
-  const [ownerdata, setownerdata] = useState({OwnerId:null,Fname:null,Lname:null})
 
-  useEffect(() => {
-    $.ajax({
-      url: "https://localhost:44388/api/ownerdata/OwnerByUsername?username=" + sessionStorage.getItem('OwnerLogin'),
-      type: 'get',
-      success: function (result) {
-        setownerdata(result)
-      },
-      error: function () {
-      }
-    });
+  const Employee = useSelector((state) => state.Reducer);
+  const Owner = useSelector((state) => state.OwnerData);
+  const dispatch = useDispatch();
 
-  }, [])
-
-
-  const [data, setdata] = useState([])
   const [d, setd] = useState(false)
 
-  const get = () => {
-    $.ajax({
-      url: "https://localhost:44388/api/employee/GetAllEmployee",
-      type: 'get',
-      success: function (result) {
-
-        setdata(result)
-        setd(false)
-      },
-      error: function () {
-
-      }
-    });
+  const axios = require('axios');
+  async function getemployee() {
+    try {
+      const response = await axios.get('https://localhost:44388/api/employee/GetAllEmployee');
+  
+      dispatch(Allemployeedata(response.data))
+    } catch (error) {
+      console.error(error);
+    }
   }
   useEffect(() => {
-    get();
-  }, [d])
+    getOwner()
+    getemployee()
+  },[d])
+  async function getOwner() {
+    try {
+      const response = await axios.get('https://localhost:44388/api/ownerdata/OwnerByUsername?username='+ sessionStorage.getItem('OwnerLogin'));
 
-  const deletehandler = (index) => {
-    $.ajax({
-
-      url: "https://localhost:44388/api/employee/delete/" + index,
-      type: 'delete',
-
-      success: function (result) { get() },
-      error: function () {
-        alert("error");
-      }
-    });
+     dispatch(GetOwnerData(response.data))
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async function deletehandler(index) {
+    try {
+      await axios.delete("https://localhost:44388/api/employee/delete/" + index);
+  
+   setd(!d)
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
     <>
-      <AddEmployeeModel fun={(e) => { setd(e); }} data={ownerdata.OwnerId} />
+      <AddEmployeeModel fun={() => { setd(!d) }} />
 
       <div className="container">
         <table className="table">
@@ -76,8 +66,8 @@ function AfterLogin() {
             </tr>
           </thead>
           <tbody>
-            {data.filter(z => z.OwnerId === ownerdata.OwnerId).map((x, y) => {
-
+            {/* {data.filter(z => z.OwnerId === ownerdata.OwnerId).map((x, y) => { */}
+            {Employee.filter(z => z.OwnerId === Owner.OwnerId).map((x, y) => {
               return (
                 <tr key={y.toString() + "gdf"}>
                   <th scope="row">{y + 1}</th>
@@ -85,11 +75,11 @@ function AfterLogin() {
                   <td className='text-uppercase'>{x.Fname}</td>
                   <td className='text-uppercase'>{x.Lname}</td>
                   <td >{moment(x.DOB).format("DD-MMMM-YYYY")}</td>
-                  <td >{ownerdata.Fname+" "+ ownerdata.Lname}</td>
+                  <td >{Owner.Fname + " " + Owner.Lname}</td>
                   <td>
                     <div className="btn-group" role="group" aria-label="Basic example">
                       <button type="button" className="btn btn-outline-danger" onClick={() => { deletehandler(x.EmpId) }}>Delete</button>
-                      <EditModel fun={(e) => { setd(e);}} data={x} />
+                      <EditModel fun={() => { setd(!d)}}  data={x} />
 
                     </div>
 

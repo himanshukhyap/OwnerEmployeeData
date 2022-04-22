@@ -3,6 +3,7 @@ import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
 function LayOut() {
+ 
     return (
         <>
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>

@@ -1,9 +1,13 @@
 import React, {  useState } from 'react'
 import { Button,  Modal } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
-import $ from "jquery"
+import {  useSelector } from 'react-redux';
+import axios from 'axios';
 function AddEmployeeModel(props) {
-
+  //  const dispatch = useDispatch();
+    // const Employee = useSelector((state) => state.Reducer);
+    const Owner = useSelector((state) =>  state.OwnerData);
+  //  console.log(Owner)
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -11,18 +15,18 @@ function AddEmployeeModel(props) {
     const handleShow = () => setShow(true);
     const { register, handleSubmit, formState: { errors } , setValue} = useForm();
     const onSubmit = (data) => {   
-  console.log(data)
-            $.ajax({
-                
-              url: "https://localhost:44388/api/employee/NewData",
-              type: 'POST',
-        data:data,
-              success: function (result) {    props.fun(true) },
-              error: function () {
-                alert(false);
-              }
-            });
-        setShow(false) 
+
+        axios.post('https://localhost:44388/api/employee/NewData', data)
+          .then(function (response) {
+         //   console.log(response);
+            props.fun(true)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+   
+         setShow(false) 
    
        
           }
@@ -51,16 +55,14 @@ function AddEmployeeModel(props) {
                         {errors.DOB && <span className='text-danger ms-2 '>This field is required</span>}
                         <input className='form-control  mb-3' type="date" {...register("DOB", { required: true })} />
                       
-                        {/* <label className="form-label">Owner Id</label>
-                        {errors.OwnerId && <span className='text-danger ms-2'>This field is required</span>}
-                        <input type="number" className='form-control  mb-3' {...register("OwnerId", { required: true })} /> */}
+             
                    
                         <div className='d-flex justify-content-center'>  
-                          <Button className=' btn btn-primary mx-3 my-3' type="submit" onClick={()=>{setValue("OwnerId",props.data)}}>
+                          <Button className=' btn btn-primary mx-3 my-3' type="submit" onClick={()=>{setValue("OwnerId",Owner.OwnerId)}}>
                             Add Employee
                         </Button>
                         </div>
-                        {/* <input type="submit" /> */}
+                       
                     </form>
                 </Modal.Body>
                
