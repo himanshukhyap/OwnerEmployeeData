@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 function AfterLoginLayout() {
 
     const Navigate = useNavigate();
-    useEffect(() => {
-        return () => {
-      
-        }
-    }, [])
+ 
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: "#e3f2fd" }}>

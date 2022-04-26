@@ -26,13 +26,16 @@ function AfterLogin() {
     }
   }
   useEffect(() => {
-    getOwner()
-    getemployee()
+    return()=>{
+      getOwner()
+      getemployee()
+    }
+   
   },[d])
   async function getOwner() {
     try {
       const response = await axios.get('https://localhost:44388/api/ownerdata/OwnerByUsername?username='+ sessionStorage.getItem('OwnerLogin'));
-
+// console.log(response.data)
      dispatch(GetOwnerData(response.data))
     } catch (error) {
       console.error(error);
