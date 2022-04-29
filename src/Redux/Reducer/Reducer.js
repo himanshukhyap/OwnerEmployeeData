@@ -12,17 +12,7 @@ export default function Reducer(state = data, Action) {
       return state;
   }
 }
-// export default function AddEmployee(state ={}, Action) {
 
-//   switch (Action.type) {
-//     case "AddEmployee": state
-
-//       break;
-
-//     default:
-//       return state;
-//   }
-// }
 export function OwnerData(state = {}, Action) {
  
 
@@ -34,6 +24,18 @@ export function OwnerData(state = {}, Action) {
       return d;
     
 
+    default:
+      return state;
+  }
+}
+
+
+export function TrueLoader(state=true, Action) {
+ 
+  switch (Action.type) {
+    case "TrueLoader": 
+     return Action.data;
+  
     default:
       return state;
   }

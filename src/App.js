@@ -7,9 +7,9 @@ import LayOut from "./EmployeeLogin/LayOut";
 import OwnerLogin from "./EmployeeLogin/OwnerLogin";
 import Registration from "./EmployeeLogin/Registration";
 
+
 function App() {
-  // const mystate = useSelector((state) => state.Reducer);
-  // const dispatch = useDispatch();
+  
 
   function RequireAuth({ children }: { children: JSX.Element }) {
 
@@ -39,7 +39,9 @@ function App() {
           path: "/Login",
           element: (
             <RequireAuth1>
-              <OwnerLogin />
+              
+               <OwnerLogin/>
+              
             </RequireAuth1>
           )
         }
@@ -54,7 +56,7 @@ function App() {
           index: true,
           element: (
             <RequireAuth>
-              <AfterLogin />
+            <AfterLogin /> 
             </RequireAuth>
           )
         }

@@ -1,12 +1,13 @@
 
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
 import $ from "jquery"
 import { useForm } from "react-hook-form";
 
+
 function OwnerLogin() {
   let navigate = useNavigate();
+
 const [errorr, seterrorr] = useState(false)
 
 // let location = useLocation();
@@ -20,10 +21,11 @@ const onSubmit = (data) => {
       url: "https://localhost:44388/api/ownerdata/Authentication",
       type: 'POST',
       data:data,
-      success: function (result) {  
+      success: function (result) {
+    
       if(result===true)
       {
-        navigate("/Employee", {state:{LoginOwnerId:data.Username, LoginIn:"true"}})
+        navigate("/Employee")
         sessionStorage.setItem("OwnerLogin", data.Username);
       }
       else
