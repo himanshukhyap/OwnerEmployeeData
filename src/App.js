@@ -1,5 +1,8 @@
 import React from "react";
+import { ThreeCircles } from "react-loader-spinner";
+import { useSelector } from "react-redux";
 import { Navigate, RouteObject, useRoutes } from "react-router-dom";
+
 import AfterLogin from "./EmployeeLogin/AfterLogin";
 import AfterLoginLayout from "./EmployeeLogin/AfterLoginLayout";
 import Index from "./EmployeeLogin/Index";
@@ -9,7 +12,7 @@ import Registration from "./EmployeeLogin/Registration";
 
 
 function App() {
-  
+  const loaderstate = useSelector((state) => state.loader);
 
   function RequireAuth({ children }: { children: JSX.Element }) {
 
@@ -39,9 +42,18 @@ function App() {
           path: "/Login",
           element: (
             <RequireAuth1>
-              
-               <OwnerLogin/>
-              
+              {loaderstate===true?
+               <OwnerLogin/>:
+               <div className="d-flex justify-content-center mt-4">
+               <ThreeCircles
+                 color="red"
+                 outerCircleColor="blue"
+                 middleCircleColor="green"
+                 innerCircleColor="grey"
+                 visible={!loaderstate}
+               />
+             </div>
+        }
             </RequireAuth1>
           )
         }
@@ -56,7 +68,15 @@ function App() {
           index: true,
           element: (
             <RequireAuth>
-            <AfterLogin /> 
+        {loaderstate===true? <AfterLogin /> : <div className="d-flex justify-content-center mt-4">
+          <ThreeCircles
+            color="red"
+            outerCircleColor="blue"
+            middleCircleColor="green"
+            innerCircleColor="grey"
+            visible={!loaderstate}
+          />
+        </div>}
             </RequireAuth>
           )
         }

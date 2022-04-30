@@ -30,10 +30,21 @@ export function OwnerData(state = {}, Action) {
 }
 
 
-export function TrueLoader(state=true, Action) {
- 
+export function loader(state=true, Action) {
+
   switch (Action.type) {
-    case "TrueLoader": 
+    case "loader": 
+     return Action.data;
+  
+    default:
+      return state;
+  }
+}
+
+export function wrongInput(state=false, Action) {
+
+  switch (Action.type) {
+    case "wrongInput": 
      return Action.data;
   
     default:

@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import Reducer, { TrueLoader,  OwnerData } from "./Reducer";
+import Reducer, { wrongInput, loader,  OwnerData } from "./Reducer";
 
-const IndexReducer = combineReducers({ Reducer , OwnerData, TrueLoader});
+const IndexReducer = combineReducers({ Reducer , OwnerData, loader, wrongInput});
 export default IndexReducer;

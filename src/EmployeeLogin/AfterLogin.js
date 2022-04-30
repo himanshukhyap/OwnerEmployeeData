@@ -3,7 +3,7 @@ import AddEmployeeModel from './AddEmployeeModel';
 import EditModel from '../EditModel';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { Allemployeedata, GetOwnerData } from '../Redux/Action';
+import { Allemployeedata, GetOwnerData, loader } from '../Redux/Action';
 
 
 
@@ -11,6 +11,7 @@ function AfterLogin() {
 
   const Employee = useSelector((state) => state.Reducer);
   const Owner = useSelector((state) => state.OwnerData);
+  const loaderstate = useSelector((state) => state.loader);
   const dispatch = useDispatch();
 
   const [d, setd] = useState(false)

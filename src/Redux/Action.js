@@ -15,10 +15,18 @@ export const GetOwnerData = (data) => {
 
   }
 }
-export const TrueLoader = (data) => {
+export const loader = (data) => {
   
   return {
-    type: "TrueLoader",
+    type: "loader",
+    data: data
+
+  }
+}
+export const wrongInput = (data) => {
+  
+  return {
+    type: "wrongInput",
     data: data
 
   }

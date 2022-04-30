@@ -1,8 +1,11 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { loader } from '../Redux/Action';
 
 function AfterLoginLayout() {
-
+    // const loaderstate = useSelector((state) => state.loader);
+    const dispatch = useDispatch();
     const Navigate = useNavigate();
  
     return (
@@ -15,8 +18,12 @@ function AfterLoginLayout() {
                     </button>
                     <ul className="navbar-nav">
                         <button className='mr-sm-2 btn btn-outline-dark' onClick={() => {
-                            sessionStorage.removeItem("OwnerLogin")
+                    dispatch(loader(false))
+                            setTimeout(() => {
+                                sessionStorage.removeItem("OwnerLogin")
+                                dispatch(loader(true))
                             Navigate("/Login")
+                            }, 1000);
                         }}>Logout</button>
                     </ul>
                 </div>
